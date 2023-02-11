@@ -1,14 +1,11 @@
 html {
-    color: rgb(9, 61, 2);
+    color: rgb(12, 79, 3);
     font-family: 'Courier New', Courier, monospace;
 }
 
 body {
     background-color: black;
 }
-
-
-
 
 
 .lds-ellipsis {
@@ -20,10 +17,10 @@ body {
   .lds-ellipsis div {
     position: absolute;
     top: 33px;
-    width: 13px;
-    height: 13px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background: rgb(9, 61, 2);
+    background: rgb(12, 79, 3);
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
   }
   .lds-ellipsis div:nth-child(1) {
