@@ -7,6 +7,14 @@ body {
     background-color: black;
 }
 
+#cmd-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: rgb(12, 79, 3);
+  caret-color: rgb(12, 79, 3);
+  font-family: 'Courier New', Courier, monospace;
+}
 
 .lds-ellipsis {
     display: inline-block;
