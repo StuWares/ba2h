@@ -22,15 +22,23 @@ let updateConsole = () => {
 cmdSubmit.addEventListener('keyup', event => {
     if (event.key === 'Enter') {
         console.log('enter key pressed')
-        let newCommand = cmdSubmit.value;        
-        if (commands.includes(newCommand.toLowerCase())) {
-            console.log('command found: ' + newCommand.toLowerCase())
+        let newCommand = cmdSubmit.value;
+        let splitCommand = newCommand.split(' ');
+        let mainCommand = splitCommand[0];
+        let commandArgument = splitCommand.slice(1).join(' ');
+        console.log(splitCommand)
+        console.log(mainCommand)
+        console.log(commandArgument)
+        
+
+        if (commands.includes(mainCommand.toLowerCase())) {
+            console.log('command found: ' + mainCommand.toLowerCase())
             consoleHistory.push('>' + newCommand);
 
-            switch (newCommand.toLowerCase()) {
-                case 'help' : help();
+            switch (mainCommand.toLowerCase()) {
+                case 'help' : help(commandArgument);
                 break;
-                case 'echo' : echo();
+                case 'echo' : echo(commandArgument);
                 break;
                 case 'whoami' : whoami();
                 break;
@@ -44,9 +52,24 @@ cmdSubmit.addEventListener('keyup', event => {
     }
 })
 
-function help() {
-    consoleHistory.push('Commands avilable: ' + commands.join(' '));
-    updateConsole();
+function help(inputString = '') {
+    let response = '';
+    
+        switch (inputString.toLowerCase()) {
+            case '' : response = 'Commands avilable: ' + commands.join(' ') + '<br> Enter help [command name] for detailed help'
+            break;
+            case 'help' : response = 'Displays help information<br>Usage: help [command name](optional)';
+            break;
+            case 'echo' : response = 'Returns an input string to the console<br>Usage: echo [string]';
+            break;
+            case 'whoami' : response = 'Returns the current logged in user name<br>Usage: whoami';
+            break;
+            default : response = 'No help information for this command';
+            break;
+        }
+        consoleHistory.push(response);
+    
+        updateConsole();
 }
 
 function echo(inputString = 'ohce') {
