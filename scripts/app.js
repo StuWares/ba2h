@@ -38,8 +38,8 @@ cmdSubmit.addEventListener('keyup', event => {
             console.log('command found: ' + mainCommand.toLowerCase())
             consoleHistory.push('>' + newCommand);
 
-            if (mainCommand.toLowerCase() !== inputHistory[inputHistory.length - 1]) {
-                inputHistory.push(mainCommand.toLowerCase());
+            if (cmdSubmit.value !== inputHistory[inputHistory.length - 1]) {
+                inputHistory.push(cmdSubmit.value);
                 if (inputHistory.length > 50) {
                     inputHistory.shift();
                 }
