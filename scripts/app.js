@@ -2,7 +2,7 @@ let username = "guest";
 let currentDate = new Date();
 const cmdSubmit = document.getElementById('cmd-input');
 const consoleDisplay = document.getElementById('console-history');
-const commands = ['help','contact', 'echo','whoami','files'];
+const commands = ['help','contact', 'echo','whoami','files','cls'];
 let consoleHistory = [];
 let inputHistory = [];
 let histPosition;
@@ -18,6 +18,7 @@ let updateConsole = () => {
         consoleHistory.shift();
     } 
     consoleDisplay.innerHTML = consoleHistory.join(separator);
+    window.scrollTo(0, document.body.scrollHeight);
 };
 
 
@@ -55,6 +56,9 @@ cmdSubmit.addEventListener('keyup', event => {
                 case 'contact' : contact();
                 break;
                 case 'files' : fileDownload();
+                break;
+                case 'cls' : clearScreen();
+                break;
             }
 
 
@@ -90,7 +94,7 @@ function help(inputString = '') {
     let response;
     
         switch (inputString.toLowerCase()) {
-            case '' : response = 'Commands avilable: ' + commands.join(' ') + '<br> Enter help [command name] for detailed help'
+            case '' : response = 'Commands avilable: ' + commands.join(' | ') + '<br> Enter help [command name] for detailed help'
             break;
             case 'help' : response = 'Displays help information<br>Usage: help [command name](optional)';
             break;
@@ -101,6 +105,8 @@ function help(inputString = '') {
             case 'contact' : response = 'It me!';
             break;
             case 'files' : response = 'View and download available files';
+            break;
+            case 'cls' : response = 'Clears the current terminal';
             break;
             default : response = 'No help information for this command';
             break;
@@ -121,12 +127,16 @@ function whoami() {
 
 function contact() {
     consoleHistory.push(
-        'Created by Stu Wares <br><a href="https://twitter.com/tamerocket" target=”_blank”>Twitter</a><br><a href="https://infosec.exchange/@stuwares" target=”_blank”>Mastodon</a><br><a href="https://www.linkedin.com/in/stuart-wares" target=”_blank”>Linkedin</a>');
+        'Created by Stu Wares <br> <a href="https://github.com/StuWares" target="_blank">GitHub</a><br> <a href="https://twitter.com/tamerocket" target=”_blank”>Twitter</a><br><a href="https://infosec.exchange/@stuwares" target=”_blank”>Mastodon</a><br><a href="https://www.linkedin.com/in/stuart-wares" target=”_blank”>Linkedin</a>');
 }
 
 // add a 'files' option and let people 'download' sql-logs.zip :D
 function fileDownload() {
     consoleHistory.push('Some totally safe files, click to download <br> ... <br>-rw-rw-r--  <a class="file-downloader" href="https://sql-logs.zip" target="_blank">sql-logs.zip</a>   120kb <br> ...')
+}
+
+function clearScreen() {
+    consoleHistory = [];
 }
 
 
