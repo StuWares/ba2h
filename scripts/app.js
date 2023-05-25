@@ -5,10 +5,12 @@ const consoleDisplay = document.getElementById('console-history');
 const commands = ['help','echo','whoami'];
 let consoleHistory = [];
 let inputHistory = [];
+let histPosition;
 
 document.getElementById('welcome').textContent = currentDate + ' ba2h console';
 document.getElementById('user-intro').textContent = 'You are currently logged in as: ' + username;
 
+cmdSubmit.value = '';
 let updateConsole = () => {
     let separator = '<br>';
     cmdSubmit.value = '';
@@ -21,20 +23,28 @@ let updateConsole = () => {
 
 cmdSubmit.addEventListener('keyup', event => {
     if (event.key === 'Enter') {
-        console.log('enter key pressed')
         let newCommand = cmdSubmit.value;
         let splitCommand = newCommand.split(' ');
         let mainCommand = splitCommand[0];
+        console.log('maincommand: ' + mainCommand)
         let commandArgument = splitCommand.slice(1).join(' ');
         console.log(splitCommand)
         console.log(mainCommand)
         console.log(commandArgument)
+
         
 
         if (commands.includes(mainCommand.toLowerCase())) {
             console.log('command found: ' + mainCommand.toLowerCase())
             consoleHistory.push('>' + newCommand);
 
+            if (mainCommand.toLowerCase() !== inputHistory[inputHistory.length - 1]) {
+                inputHistory.push(mainCommand.toLowerCase());
+                if (inputHistory.length > 50) {
+                    inputHistory.shift();
+                }
+                histPosition = inputHistory.length - 1;
+            }
             switch (mainCommand.toLowerCase()) {
                 case 'help' : help(commandArgument);
                 break;
@@ -50,6 +60,27 @@ cmdSubmit.addEventListener('keyup', event => {
         }
         updateConsole();
     }
+    if (event.key === 'ArrowUp' ) {
+
+        console.log(histPosition);
+        if (histPosition >= 0) {
+            cmdSubmit.value = inputHistory[histPosition];
+            if (histPosition > 0) {
+                histPosition--;
+            }
+
+        }
+
+    }
+    if (event.key === 'ArrowDown') {
+        if (histPosition <= inputHistory.length - 1) {
+            cmdSubmit.value = inputHistory[histPosition];
+            if (histPosition < inputHistory.length - 1) {
+                histPosition++;
+            }
+        }
+    }
+
 })
 
 function help(inputString = '') {
