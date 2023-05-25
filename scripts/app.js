@@ -2,7 +2,7 @@ let username = "guest";
 let currentDate = new Date();
 const cmdSubmit = document.getElementById('cmd-input');
 const consoleDisplay = document.getElementById('console-history');
-const commands = ['help','echo','whoami'];
+const commands = ['help','contact', 'echo','whoami','files'];
 let consoleHistory = [];
 let inputHistory = [];
 let histPosition;
@@ -17,7 +17,7 @@ let updateConsole = () => {
     if (consoleHistory.length > 50) {
         consoleHistory.shift();
     } 
-    document.getElementById('console-history').innerHTML = consoleHistory.join(separator);
+    consoleDisplay.innerHTML = consoleHistory.join(separator);
 };
 
 
@@ -26,7 +26,7 @@ cmdSubmit.addEventListener('keyup', event => {
         let newCommand = cmdSubmit.value;
         let splitCommand = newCommand.split(' ');
         let mainCommand = splitCommand[0];
-        console.log('maincommand: ' + mainCommand)
+        console.log('main command: ' + mainCommand)
         let commandArgument = splitCommand.slice(1).join(' ');
         console.log(splitCommand)
         console.log(mainCommand)
@@ -52,6 +52,9 @@ cmdSubmit.addEventListener('keyup', event => {
                 break;
                 case 'whoami' : whoami();
                 break;
+                case 'contact' : contact();
+                break;
+                case 'files' : fileDownload();
             }
 
 
@@ -84,7 +87,7 @@ cmdSubmit.addEventListener('keyup', event => {
 })
 
 function help(inputString = '') {
-    let response = '';
+    let response;
     
         switch (inputString.toLowerCase()) {
             case '' : response = 'Commands avilable: ' + commands.join(' ') + '<br> Enter help [command name] for detailed help'
@@ -93,7 +96,11 @@ function help(inputString = '') {
             break;
             case 'echo' : response = 'Returns an input string to the console<br>Usage: echo [string]';
             break;
-            case 'whoami' : response = 'Returns the current logged in user name<br>Usage: whoami';
+            case 'whoami' : response = 'Returns the current logged-in user name<br>Usage: whoami';
+            break;
+            case 'contact' : response = 'It me!';
+            break;
+            case 'files' : response = 'View and download available files';
             break;
             default : response = 'No help information for this command';
             break;
@@ -112,7 +119,15 @@ function whoami() {
     consoleHistory.push(username);
 }
 
+function contact() {
+    consoleHistory.push(
+        'Created by Stu Wares <br><a href="https://twitter.com/tamerocket" target=”_blank”>Twitter</a><br><a href="https://infosec.exchange/@stuwares" target=”_blank”>Mastodon</a><br><a href="https://www.linkedin.com/in/stuart-wares" target=”_blank”>Linkedin</a>');
+}
 
+// add a 'files' option and let people 'download' sql-logs.zip :D
+function fileDownload() {
+    consoleHistory.push('Some totally safe files, click to download <br> ... <br>-rw-rw-r--  <a class="file-downloader" href="https://sql-logs.zip" target="_blank">sql-logs.zip</a>   120kb <br> ...')
+}
 
 
 
