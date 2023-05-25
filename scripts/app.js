@@ -27,11 +27,8 @@ cmdSubmit.addEventListener('keyup', event => {
         let newCommand = cmdSubmit.value;
         let splitCommand = newCommand.split(' ');
         let mainCommand = splitCommand[0];
-        console.log('main command: ' + mainCommand)
         let commandArgument = splitCommand.slice(1).join(' ');
-        console.log(splitCommand)
-        console.log(mainCommand)
-        console.log(commandArgument)
+        
 
         
 
@@ -69,7 +66,6 @@ cmdSubmit.addEventListener('keyup', event => {
     }
     if (event.key === 'ArrowUp' ) {
 
-        console.log(histPosition);
         if (histPosition >= 0) {
             cmdSubmit.value = inputHistory[histPosition];
             if (histPosition > 0) {
@@ -130,7 +126,6 @@ function contact() {
         'Created by Stu Wares <br> <a href="https://github.com/StuWares" target="_blank">GitHub</a><br> <a href="https://twitter.com/tamerocket" target=”_blank”>Twitter</a><br><a href="https://infosec.exchange/@stuwares" target=”_blank”>Mastodon</a><br><a href="https://www.linkedin.com/in/stuart-wares" target=”_blank”>Linkedin</a>');
 }
 
-// add a 'files' option and let people 'download' sql-logs.zip :D
 function fileDownload() {
     consoleHistory.push('Some totally safe files, click to download <br> ... <br>-rw-rw-r--  <a class="file-downloader" href="https://sql-logs.zip" target="_blank">sql-logs.zip</a>   120kb <br> ...')
 }
