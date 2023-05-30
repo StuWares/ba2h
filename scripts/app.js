@@ -18,7 +18,7 @@ let updateConsole = () => {
         consoleHistory.shift();
     } 
     consoleDisplay.innerHTML = consoleHistory.join(separator);
-    window.scrollTo(0, document.body.scrollHeight);
+    window.scrollTo(0, document.body.offsetHeight);
 };
 
 
