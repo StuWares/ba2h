@@ -2,7 +2,7 @@ let username = "guest";
 let currentDate = new Date();
 const cmdSubmit = document.getElementById('cmd-input');
 const consoleDisplay = document.getElementById('console-history');
-const commands = ['help','contact', 'echo','whoami','files','cls'];
+const commands = ['help','contact','news', 'echo','whoami','files','cls'];
 let consoleHistory = [];
 let inputHistory = [];
 let histPosition;
@@ -18,7 +18,7 @@ let updateConsole = () => {
         consoleHistory.shift();
     } 
     consoleDisplay.innerHTML = consoleHistory.join(separator);
-    window.scrollTo(0, document.body.scrollHeight);
+    window.scrollTo(0, document.body.offsetHeight); // Tested changing from scrollHeight to offsetHeight to fix iPhone virtual keyboard issue
 };
 
 
@@ -28,8 +28,6 @@ cmdSubmit.addEventListener('keyup', event => {
         let splitCommand = newCommand.split(' ');
         let mainCommand = splitCommand[0];
         let commandArgument = splitCommand.slice(1).join(' ');
-        
-
         
 
         if (commands.includes(mainCommand.toLowerCase())) {
@@ -56,6 +54,7 @@ cmdSubmit.addEventListener('keyup', event => {
                 break;
                 case 'cls' : clearScreen();
                 break;
+                case 'news' : theNews();
             }
 
 
@@ -104,6 +103,8 @@ function help(inputString = '') {
             break;
             case 'cls' : response = 'Clears the current terminal';
             break;
+            case 'news' : response = 'What\'s going on?';
+            break;
             default : response = 'No help information for this command';
             break;
         }
@@ -134,6 +135,14 @@ function clearScreen() {
     consoleHistory = [];
 }
 
+function theNews() {
+    const BLEEPING_RSS = 'https://cors-anywhere.herokuapp.com/https://www.bleepingcomputer.com/feed/';
+    fetch(BLEEPING_RSS)
+        .then(response => response.text())
+        .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+        .then(data => console.log(data))
+
+}
 
 
 
