@@ -2,7 +2,8 @@ let username = "guest";
 let currentDate = new Date();
 const cmdSubmit = document.getElementById('cmd-input');
 const consoleDisplay = document.getElementById('console-history');
-const commands = ['help','contact','news', 'echo','whoami','files','cls'];
+const mainContainer = document.getElementById('main-box');
+const commands = ['help','contact','rm', 'echo','whoami','files','cls'];
 let consoleHistory = [];
 let inputHistory = [];
 let histPosition;
@@ -28,6 +29,7 @@ cmdSubmit.addEventListener('keyup', event => {
         let splitCommand = newCommand.split(' ');
         let mainCommand = splitCommand[0];
         let commandArgument = splitCommand.slice(1).join(' ');
+        let commandArg2 = splitCommand.slice(2).join(' ');
         
 
         if (commands.includes(mainCommand.toLowerCase())) {
@@ -54,7 +56,7 @@ cmdSubmit.addEventListener('keyup', event => {
                 break;
                 case 'cls' : clearScreen();
                 break;
-                case 'news' : theNews();
+                case 'rm' : remove(commandArgument, commandArg2);
             }
 
 
@@ -103,7 +105,7 @@ function help(inputString = '') {
             break;
             case 'cls' : response = 'Clears the current terminal';
             break;
-            case 'news' : response = 'What\'s going on?';
+            case 'rm' : response = 'Removes files or folders<br>-f force, ignore nonexistent files and arguments, never prompt<br>-r recursive, remove directories and their contents recursively<br>--no-preserve-root do not treat "/" specially ';
             break;
             default : response = 'No help information for this command';
             break;
@@ -135,14 +137,16 @@ function clearScreen() {
     consoleHistory = [];
 }
 
-function theNews() {
-    const BLEEPING_RSS = 'https://cors-anywhere.herokuapp.com/https://www.bleepingcomputer.com/feed/';
-    fetch(BLEEPING_RSS)
-        .then(response => response.text())
-        .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
-        .then(data => console.log(data))
 
+function remove(arg1 = ' ', arg2 = ' ') {
+    console.log(arg1)
+    console.log(arg2)
+    if ((arg1.toLowerCase() == '-rf --no-preserve-root' || arg1.toLowerCase() == '-fr --no-preserve-root') ) {
+        consoleHistory.push('yeet!')
+        consoleHistory = []
+        mainContainer.remove();
+        document.body.style.backgroundColor = "white";
+
+    }
 }
-
-
 
