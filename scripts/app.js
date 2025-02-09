@@ -169,6 +169,11 @@ function su(name) {
         username = name
         console.log(username)
         document.getElementById('user-intro').textContent = 'You are currently logged in as: ' + username;
+    }
+    else if (name == "- root") {
+        username = 'root'
+        console.log(username)
+        document.getElementById('user-intro').textContent = 'You are currently logged in as: ' + username;
     } else {
         consoleHistory.push("su: user " + name + " does not exist");
     }
