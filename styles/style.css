@@ -19,6 +19,7 @@ body {
   outline: none;
   color: var(--theGreen);
   caret-color: var(--theGreen);
+  width: 50%;
   font-family: 'Courier New', Courier, monospace;
     font-size: 16px;
 }
