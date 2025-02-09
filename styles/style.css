@@ -1,6 +1,12 @@
+:root {
+    --theGreen: rgb(16, 97, 5);
+    --darkerGreen: rgb(12, 79, 3);
+}
+
 html {
-    color: rgb(12, 79, 3);
+    color: var(--theGreen);
     font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
 }
 
 body {
@@ -11,14 +17,15 @@ body {
   background: transparent;
   border: none;
   outline: none;
-  color: rgb(12, 79, 3);
-  caret-color: rgb(12, 79, 3);
+  color: var(--theGreen);
+  caret-color: var(--theGreen);
+  width: 50%;
   font-family: 'Courier New', Courier, monospace;
     font-size: 16px;
 }
 
 a {
-    color: rgb(12, 79, 3);
+    color: var(--theGreen);
     font-family: 'Courier New', Courier, monospace;
 }
 

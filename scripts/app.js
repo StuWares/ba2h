@@ -2,7 +2,8 @@ let username = "guest";
 let currentDate = new Date();
 const cmdSubmit = document.getElementById('cmd-input');
 const consoleDisplay = document.getElementById('console-history');
-const commands = ['help','contact', 'echo','whoami','files','cls'];
+const mainContainer = document.getElementById('main-box');
+const commands = ['help','contact','rm', 'echo','whoami','files','cls', 'su', 'sudo'];
 let consoleHistory = [];
 let inputHistory = [];
 let histPosition;
@@ -18,7 +19,9 @@ let updateConsole = () => {
         consoleHistory.shift();
     } 
     consoleDisplay.innerHTML = consoleHistory.join(separator);
-    window.scrollTo(0, document.body.offsetHeight);
+
+    window.scrollTo(0, document.body.offsetHeight); // Tested changing from scrollHeight to offsetHeight to fix iPhone virtual keyboard issue
+
 };
 
 
@@ -28,8 +31,7 @@ cmdSubmit.addEventListener('keyup', event => {
         let splitCommand = newCommand.split(' ');
         let mainCommand = splitCommand[0];
         let commandArgument = splitCommand.slice(1).join(' ');
-        
-
+        let commandArg2 = splitCommand.slice(2).join(' ');
         
 
         if (commands.includes(mainCommand.toLowerCase())) {
@@ -55,6 +57,12 @@ cmdSubmit.addEventListener('keyup', event => {
                 case 'files' : fileDownload();
                 break;
                 case 'cls' : clearScreen();
+                break;
+                case 'rm' : remove(commandArgument, commandArg2);
+                break;
+                case 'su' : su(commandArgument);
+                break;
+                case 'sudo' : sudo();
                 break;
             }
 
@@ -104,6 +112,12 @@ function help(inputString = '') {
             break;
             case 'cls' : response = 'Clears the current terminal';
             break;
+            case 'rm' : response = 'Removes files or folders<br>-f force, ignore nonexistent files and arguments, never prompt<br>-r recursive, remove directories and their contents recursively<br>--no-preserve-root do not treat "/" specially ';
+            break;
+            case 'su' : response = "Switch to a different user account for the current terminal session<br>Usage: su [username]";
+            break;
+            case 'sudo' : response = "Make me a sandwich";
+            break;
             default : response = 'No help information for this command';
             break;
         }
@@ -135,5 +149,33 @@ function clearScreen() {
 }
 
 
+function remove(arg1 = ' ', arg2 = ' ') {
+    console.log(arg1)
+    console.log(arg2)
+    if (username == 'root') {
+        if ((arg1.toLowerCase() == '-rf / --no-preserve-root' || arg1.toLowerCase() == '-fr / --no-preserve-root') ) {
+            consoleHistory.push('yeet!')
+            consoleHistory = []
+            mainContainer.remove();
+            document.body.style.backgroundColor = "white";
+        }
+    } else {
+        consoleHistory.push("Permission denied")
+    }
+}
 
+function su(name) {
+    if (name == "guest" || name == "root"){
+        username = name
+        console.log(username)
+        document.getElementById('user-intro').textContent = 'You are currently logged in as: ' + username;
+    } else {
+        consoleHistory.push("su: user " + name + " does not exist");
+    }
+}
 
+function sudo() {
+    if (username != 'root'){
+        consoleHistory.push(username + " is not in the sudoers file. This incident will be reported. Also your parents have been called")
+    }
+}
