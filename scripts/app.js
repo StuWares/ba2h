@@ -3,7 +3,7 @@ let currentDate = new Date();
 const cmdSubmit = document.getElementById('cmd-input');
 const consoleDisplay = document.getElementById('console-history');
 const mainContainer = document.getElementById('main-box');
-const commands = ['help','contact','rm', 'echo','whoami','files','cls', 'su', 'sudo'];
+const commands = ['help','contact','rm', 'echo','whoami','files','cls', 'su', 'sudo', 'joke'];
 let consoleHistory = [];
 let inputHistory = [];
 let histPosition;
@@ -64,6 +64,7 @@ cmdSubmit.addEventListener('keyup', event => {
                 break;
                 case 'sudo' : sudo();
                 break;
+                case 'joke' : joke();
             }
 
 
@@ -117,6 +118,8 @@ function help(inputString = '') {
             case 'su' : response = "Switch to a different user account for the current terminal session<br>Usage: su [username]";
             break;
             case 'sudo' : response = "Make me a sandwich";
+            break;
+            case 'joke' : response = "Expertly crafted humor, straight to your console";
             break;
             default : response = 'No help information for this command';
             break;
@@ -183,4 +186,18 @@ function sudo() {
     if (username != 'root'){
         consoleHistory.push(username + " is not in the sudoers file. This incident will be reported. Also your parents have been called")
     }
+}
+
+function joke(first=true) {
+    if (first) {
+        consoleHistory.push("Knock, knock. <br> Race Condition!");
+        setTimeout(
+            () => {
+                joke(false);
+                updateConsole();
+            }, 2000,
+        )
+    } else {
+        consoleHistory.push("Who's there?"); 
+    }       
 }
