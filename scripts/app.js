@@ -21,7 +21,6 @@ let updateConsole = () => {
     consoleDisplay.innerHTML = consoleHistory.join(separator);
 
     window.scrollTo(0, document.body.offsetHeight); // Tested changing from scrollHeight to offsetHeight to fix iPhone virtual keyboard issue
-
 };
 
 
